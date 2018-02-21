@@ -69,7 +69,6 @@
 		"no-shadow": 1,
 		"no-undef": 2,
 		"no-undefined": 2,
-		"no-use-before-define": 2,
 		"no-sync": 1,
 
 		"array-bracket-spacing": 2,
@@ -82,7 +81,7 @@
 		"func-call-spacing": 2,
 		"indent": [2, "tab", {"SwitchCase": 1}],
 		"key-spacing": 2,
-		"keyword-spacing": 1,
+		"keyword-spacing": 2,
 		"line-comment-position": 1,
 		"linebreak-style": 2,
 		"lines-around-comment": 2,
