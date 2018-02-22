@@ -1,29 +1,29 @@
 {
-	"name": "eslint-format",
-	"main": "./lib/eslint-format",
-	"version": "0.0.0",
-	"description": "Format code with Atom IDE and ESLint",
-	"keywords": [
-		"format",
-		"eslint"
-	],
-	"repository": "https://github.com/AtomFormat/eslint-format",
-	"license": "MIT",
-	"engines": {
-		"atom": ">=1.24.0 <2.0.0"
-	},
-	"dependencies": {
-		"eslint": "^4.18.1"
-	},
-	"atomTestRunner": "atom-jasmine3-test-runner",
-	"providedServices": {
-		"code-format.range": {
-			"versions": {
-				"0.1.0": "provideCodeFormat"
-			}
-		}
-	},
-	"devDependencies": {
-		"atom-jasmine3-test-runner": "^3.0.0"
-	}
+  "name": "eslint-format",
+  "main": "./lib/eslint-format",
+  "version": "0.1.0",
+  "description": "Format code with Atom IDE and ESLint",
+  "keywords": [
+    "format",
+    "eslint"
+  ],
+  "repository": "https://github.com/AtomFormat/eslint-format",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.24.0 <2.0.0"
+  },
+  "dependencies": {
+    "eslint": "^4.18.1"
+  },
+  "atomTestRunner": "atom-jasmine3-test-runner",
+  "providedServices": {
+    "code-format.range": {
+      "versions": {
+        "0.1.0": "provideCodeFormat"
+      }
+    }
+  },
+  "devDependencies": {
+    "atom-jasmine3-test-runner": "^3.0.0"
+  }
 }
