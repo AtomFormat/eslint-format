@@ -1,7 +1,6 @@
 /** @babel */
 
 import worker from "../lib/worker";
-import path from "path";
 import {fixturesPath} from "./helper";
 import eslint from "eslint";
 
@@ -82,9 +81,10 @@ describe("worker", function () {
 
 		it("should return the default config folder when given a json file", function () {
 			const config = fixturesPath(".eslintrc.json");
+			const dirname = fixturesPath();
 			const defaultConfig = worker.getDefaultConfig(config);
 
-			expect(defaultConfig).toEqual(path.dirname(config));
+			expect(defaultConfig).toEqual(dirname);
 		});
 	});
 
