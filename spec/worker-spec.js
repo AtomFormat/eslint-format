@@ -1,7 +1,7 @@
 /** @babel */
 
 import worker from "../lib/worker";
-import {fixturesPath} from "./helper";
+import {fixturesPath, projectPath} from "./helper";
 import eslint from "eslint";
 
 describe("worker", function () {
@@ -17,7 +17,7 @@ describe("worker", function () {
 				defaultConfig: "/test/",
 				errorsOnly: false,
 			};
-			worker(file, text, config);
+			worker(file, projectPath(file), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).not.toBe(config.defaultConfig);
 		});
@@ -29,7 +29,7 @@ describe("worker", function () {
 				defaultConfig: fixturesPath(),
 				errorsOnly: false,
 			};
-			worker(file, text, config);
+			worker(file, projectPath(file), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).toBe(config.defaultConfig);
 		});
@@ -42,7 +42,7 @@ describe("worker", function () {
 				defaultConfig: fixturesPath(),
 				errorsOnly: false,
 			};
-			worker(file, text, config);
+			worker(file, projectPath(file), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).toBe(config.defaultConfig);
 		});
@@ -54,7 +54,7 @@ describe("worker", function () {
 				defaultConfig: "",
 				errorsOnly: false,
 			};
-			const fixedText = worker(file, text, config);
+			const fixedText = worker(file, projectPath(file), text, config);
 
 			expect(fixedText).toBe(`${text};\n`);
 		});
@@ -66,7 +66,7 @@ describe("worker", function () {
 				defaultConfig: "/",
 				errorsOnly: true,
 			};
-			const fixedText = worker(file, text, config);
+			const fixedText = worker(file, projectPath(file), text, config);
 
 			expect(fixedText).toBe(text);
 		});
