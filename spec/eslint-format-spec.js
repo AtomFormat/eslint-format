@@ -1,8 +1,8 @@
 /** @babel */
 
 import eslintFormat from "../lib/eslint-format";
-import path from "path";
 import {Range} from "atom";
+import {fixturesPath} from "./helper";
 
 describe("eslint-format", function () {
 	beforeEach(async function () {
@@ -27,12 +27,27 @@ describe("eslint-format", function () {
 
 	describe("formatCode", function () {
 		it("should create a new worker", async function () {
-			const simpleFile = path.join(__dirname, "fixtures", "simple.js");
-			const editor = await atom.workspace.open(simpleFile);
+			const testFile = fixturesPath("test.js");
+			const editor = await atom.workspace.open(testFile);
 			const range = new Range([0, 0], [0, 9]);
-			eslintFormat.provideCodeFormat().formatCode(editor, range);
+			const promise = eslintFormat.provideCodeFormat().formatCode(editor, range);
 
 			expect(eslintFormat.workers.size).toBe(1);
+			await promise;
+		});
+
+		it("should return an array of textEdit objects", async function () {
+			// https://github.com/facebook/nuclide/blob/e9e11a8209e2133c0ae2a4156f0406184a052cb4/modules/nuclide-commons-atom/text-edit.js#L21
+			const testFile = fixturesPath("test.js");
+			const editor = await atom.workspace.open(testFile);
+			const range = new Range([0, 0], [0, 9]);
+			const textEdit = await eslintFormat.provideCodeFormat().formatCode(editor, range);
+
+			expect(textEdit).toEqual([jasmine.objectContaining({
+				oldRange: range,
+				oldText: editor.getTextInBufferRange(range),
+				newText: jasmine.any(String),
+			})]);
 		});
 	});
 });
