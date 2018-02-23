@@ -13,14 +13,14 @@ describe("eslint-format", function () {
 	describe("grammars", function () {
 		it("should return grammars from settings", function () {
 			const scopes = atom.config.get("eslint-format.scopes");
-			const {grammars} = eslintFormat.provideCodeFormat();
+			const {grammars} = eslintFormat.provideRangeCodeFormat();
 
 			expect(scopes).toEqual(grammars);
 		});
 		it("should return grammars from settings", function () {
 			const scopes = ["test", "scopes"];
 			atom.config.set("eslint-format.scopes", scopes);
-			const {grammars} = eslintFormat.provideCodeFormat();
+			const {grammars} = eslintFormat.provideRangeCodeFormat();
 
 			expect(scopes).toEqual(grammars);
 		});
@@ -30,8 +30,7 @@ describe("eslint-format", function () {
 		it("should create a new worker and remove it when done", async function () {
 			const testFile = fixturesPath("test.js");
 			const editor = await atom.workspace.open(testFile);
-			const range = editor.getBuffer().getRange();
-			const promise = eslintFormat.provideCodeFormat().formatCode(editor, range);
+			const promise = eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
 
 			expect(eslintFormat.workers.size).toBe(1);
 			await promise;
@@ -41,8 +40,7 @@ describe("eslint-format", function () {
 		it("should return an array of textEdit objects", async function () {
 			const testFile = fixturesPath("test.js");
 			const editor = await atom.workspace.open(testFile);
-			const range = editor.getBuffer().getRange();
-			const textEdits = await eslintFormat.provideCodeFormat().formatCode(editor, range);
+			const textEdits = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
 
 			expect(textEdits).toEqual([{
 				newText: ";",
@@ -54,8 +52,7 @@ describe("eslint-format", function () {
 		it("should list errors in reverse order", async function () {
 			const lotsOfErrorsFile = fixturesPath("lots-of-errors.js");
 			const editor = await atom.workspace.open(lotsOfErrorsFile);
-			const range = editor.getBuffer().getRange();
-			const textEdits = await eslintFormat.provideCodeFormat().formatCode(editor, range);
+			const textEdits = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
 
 			expect(textEdits.length).toBe(13);
 			expect(textEdits[0].oldRange.start.row).toBeGreaterThan(textEdits[7].oldRange.start.row);
@@ -64,9 +61,8 @@ describe("eslint-format", function () {
 		it("should only fix errors if errorsOnly is true", async function () {
 			const lotsOfErrorsFile = fixturesPath("lots-of-errors.js");
 			const editor = await atom.workspace.open(lotsOfErrorsFile);
-			const range = editor.getBuffer().getRange();
 			atom.config.set("eslint-format.errorsOnly", true);
-			const textEdits = await eslintFormat.provideCodeFormat().formatCode(editor, range);
+			const textEdits = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
 
 			expect(textEdits.length).toBe(8);
 		});
@@ -74,8 +70,7 @@ describe("eslint-format", function () {
 		it("should return an empty array if no fixable errors are found", async function () {
 			const noFixableErrorsFile = fixturesPath("no-fixable-errors.js");
 			const editor = await atom.workspace.open(noFixableErrorsFile);
-			const range = editor.getBuffer().getRange();
-			const textEdits = await eslintFormat.provideCodeFormat().formatCode(editor, range);
+			const textEdits = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
 
 			expect(textEdits).toEqual([]);
 		});
@@ -83,10 +78,9 @@ describe("eslint-format", function () {
 		it("should throw an error if not valid js", async function () {
 			const notValidJsFile = fixturesPath("not-valid-js.js");
 			const editor = await atom.workspace.open(notValidJsFile);
-			const range = editor.getBuffer().getRange();
 			let error;
 			try {
-				await eslintFormat.provideCodeFormat().formatCode(editor, range);
+				await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
 			} catch (ex) {
 				error = ex;
 			}
@@ -98,7 +92,7 @@ describe("eslint-format", function () {
 			const lotsOfErrorsFile = fixturesPath("lots-of-errors.js");
 			const editor = await atom.workspace.open(lotsOfErrorsFile);
 			const range = new Range([6, 0], [9, 0]);
-			const textEdits = await eslintFormat.provideCodeFormat().formatCode(editor, range);
+			const textEdits = await eslintFormat.provideRangeCodeFormat().formatCode(editor, range);
 
 			expect(textEdits).toEqual([{
 				newText: "const",
