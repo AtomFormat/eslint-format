@@ -47,24 +47,16 @@
                 "message": "Do not commit focused tests."
             },
             {
-                "name": "ffit",
-                "message": "Do not commit focused tests."
-            },
-            {
-                "name": "fffit",
-                "message": "Do not commit focused tests."
+                "name": "xit",
+                "message": "Why is this skipped?."
             },
             {
                 "name": "fdescribe",
                 "message": "Do not commit focused tests."
             },
             {
-                "name": "ffdescribe",
-                "message": "Do not commit focused tests."
-            },
-            {
-                "name": "fffdescribe",
-                "message": "Do not commit focused tests."
+                "name": "xdescribe",
+                "message": "Why is this skipped?"
             }
         ],
 		"no-shadow": 1,
