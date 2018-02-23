@@ -29,7 +29,7 @@ describe("worker", function () {
 				defaultConfig: fixturesPath(),
 				errorsOnly: false,
 			};
-			worker(file, projectPath(file), text, config);
+			worker(null, projectPath(file), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).toBe(config.defaultConfig);
 		});
@@ -45,30 +45,6 @@ describe("worker", function () {
 			worker(file, projectPath(file), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).toBe(config.defaultConfig);
-		});
-
-		it("should fix warnings when errorsOnly is false", function () {
-			const file = fixturesPath("test.js");
-			const text = "\"test\"";
-			const config = {
-				defaultConfig: "",
-				errorsOnly: false,
-			};
-			const fixedText = worker(file, projectPath(file), text, config);
-
-			expect(fixedText).toBe(`${text};\n`);
-		});
-
-		it("should not fix warnings when errorsOnly is true", function () {
-			const file = fixturesPath("test.js");
-			const text = "\"test\"";
-			const config = {
-				defaultConfig: "/",
-				errorsOnly: true,
-			};
-			const fixedText = worker(file, projectPath(file), text, config);
-
-			expect(fixedText).toBe(text);
 		});
 	});
 	describe("getDefaultConfig", function () {
@@ -89,38 +65,22 @@ describe("worker", function () {
 	});
 
 	describe("execute", function () {
-		it("should fix the text", function () {
+		it("should send fixes", function () {
 			const text = "\"test\"";
 			const config = {
-				fix: true,
 				useEslintrc: false,
 				rules: {
 					semi: 1,
 				},
 			};
-			const fixed = worker.execute(eslint, text, config);
+			const result = worker.execute(eslint, text, config);
 
-			expect(fixed).toBe(`${text};`);
-		});
-
-		it("should not fix warnings", function () {
-			const text = "\"test\"";
-			const config = {
-				fix: (rule => rule.severity === 2),
-				useEslintrc: false,
-				rules: {
-					semi: 1,
-				},
-			};
-			const fixed = worker.execute(eslint, text, config);
-
-			expect(fixed).toBe(text);
+			expect(result.results[0].messages[0].fix.text).toBe(";");
 		});
 
 		it("should throw error if no config", function () {
 			const text = "test";
 			const config = {
-				fix: true,
 				cwd: "/"
 			};
 			expect(function () {
