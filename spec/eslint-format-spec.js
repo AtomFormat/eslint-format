@@ -2,12 +2,11 @@
 
 import eslintFormat from "../lib/eslint-format";
 import {Range} from "atom";
-import {fixturesPath, mockConfig} from "./helper";
+import {fixturesPath} from "./helper";
 
 describe("eslint-format", function () {
 	beforeEach(async function () {
 		await atom.packages.activatePackage("eslint-format");
-		mockConfig();
 	});
 
 	describe("grammars", function () {
