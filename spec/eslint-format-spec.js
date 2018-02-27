@@ -99,5 +99,13 @@ describe("eslint-format", function () {
 				oldRange: new Range([7, 1], [7, 4]),
 			}]);
 		});
+
+		it("should run fix mulltiple times to get every rule", async function () {
+			const doubleRunFile = fixturesPath("double-run.js");
+			const editor = await atom.workspace.open(doubleRunFile);
+			const [{newText}] = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
+
+			expect(newText).toContain("${b}");
+		});
 	});
 });

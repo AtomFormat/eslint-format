@@ -1,5 +1,7 @@
 {
 	"rules": {
-		"semi": 1
+		"semi": 1,
+		"prefer-template": 2,
+		"template-curly-spacing": 2
 	}
 }
