@@ -1,3 +1,4 @@
+
 function test (){
 	let that =0;
 this.one  = 1

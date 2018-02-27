@@ -36,34 +36,50 @@ describe("eslint-format", function () {
 			expect(eslintFormat.workers.size).toBe(0);
 		});
 
-		it("should return an array of textEdit objects", async function () {
-			const testFile = fixturesPath("test.js");
-			const editor = await atom.workspace.open(testFile);
-			const textEdits = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
-
-			expect(textEdits).toEqual([{
-				newText: ";",
-				oldText: "",
-				oldRange: new Range([0, 6], [0, 6]),
-			}]);
-		});
-
-		it("should list errors in reverse order", async function () {
+		it("should return the correct oldText", async function () {
 			const lotsOfErrorsFile = fixturesPath("lots-of-errors.js");
 			const editor = await atom.workspace.open(lotsOfErrorsFile);
-			const textEdits = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
+			const [{oldText}] = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
 
-			expect(textEdits.length).toBe(13);
-			expect(textEdits[0].oldRange.start.row).toBeGreaterThan(textEdits[7].oldRange.start.row);
+			expect(oldText).toBe(`
+function test (){
+	let that =0;
+this.one  = 1
+		nums ( 2,3,  4);
+}
+
+function func2() {
+	let a = 1;
+}
+`);
+		});
+
+		it("should fix errors and warnings", async function () {
+			const lotsOfErrorsFile = fixturesPath("lots-of-errors.js");
+			const editor = await atom.workspace.open(lotsOfErrorsFile);
+			const [{newText}] = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
+
+			expect(newText).toBe(`
+function test() {
+	const that = 0;
+	this.one = 1;
+	nums(2, 3, 4);
+}
+
+function func2() {
+	const a = 1;
+}
+`);
 		});
 
 		it("should only fix errors if errorsOnly is true", async function () {
 			const lotsOfErrorsFile = fixturesPath("lots-of-errors.js");
 			const editor = await atom.workspace.open(lotsOfErrorsFile);
 			atom.config.set("eslint-format.errorsOnly", true);
-			const textEdits = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
+			const [{newText}] = await eslintFormat.provideOnSaveCodeFormat().formatCode(editor);
+			const lines = newText.split("\n");
 
-			expect(textEdits.length).toBe(8);
+			expect(lines[3]).toBe("\tthis.one  = 1");
 		});
 
 		it("should return an empty array if no fixable errors are found", async function () {
@@ -90,14 +106,10 @@ describe("eslint-format", function () {
 		it("should return correct ranges for selected fix", async function () {
 			const lotsOfErrorsFile = fixturesPath("lots-of-errors.js");
 			const editor = await atom.workspace.open(lotsOfErrorsFile);
-			const range = new Range([6, 0], [9, 0]);
-			const textEdits = await eslintFormat.provideRangeCodeFormat().formatCode(editor, range);
+			const range = new Range([7, 0], [10, 0]);
+			const [{oldRange}] = await eslintFormat.provideRangeCodeFormat().formatCode(editor, range);
 
-			expect(textEdits).toEqual([{
-				newText: "const",
-				oldText: "let",
-				oldRange: new Range([7, 1], [7, 4]),
-			}]);
+			expect(oldRange).toEqual(range);
 		});
 
 		it("should run fix mulltiple times to get every rule", async function () {
