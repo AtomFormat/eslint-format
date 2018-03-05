@@ -1,5 +1,9 @@
 <!-- lint disable first-heading-level list-item-indent -->
 
+## 0.3.1 - 2018-03-05
+
+- Update eslint to 4.18.2 to prevent peer dependency warning
+
 ## 0.3.0 - 2018-02-27
 
 - Fix whole file (This allows ESLint to fix overlapping rules)
