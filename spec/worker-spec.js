@@ -11,13 +11,13 @@ describe("worker", function () {
 		});
 
 		it("should run once if config is found", function () {
-			const file = fixturesPath("test.js");
+			const fileDir = fixturesPath();
 			const text = "\"test\";";
 			const config = {
 				defaultConfig: "/test/",
 				errorsOnly: false,
 			};
-			worker(file, projectPath(file), text, config);
+			worker(fileDir, projectPath(fileDir), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).not.toBe(config.defaultConfig);
 		});
@@ -36,13 +36,13 @@ describe("worker", function () {
 
 		it("should run default config if no editor path and no project path", function () {
 			atom.project.setPaths([]);
-			const file = null;
+			const fileDir = null;
 			const text = "\"test\";";
 			const config = {
 				defaultConfig: fixturesPath(),
 				errorsOnly: false,
 			};
-			worker(file, projectPath(file), text, config);
+			worker(fileDir, projectPath(fileDir), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).toBe(config.defaultConfig);
 		});
