@@ -1,5 +1,9 @@
 <!-- lint disable first-heading-level list-item-indent -->
 
+## 0.4.0 - 2018-09-25
+
+- Update eslint to 5.6.0
+
 ## 0.3.1 - 2018-03-05
 
 - Update eslint to 4.18.2 to prevent peer dependency warning
