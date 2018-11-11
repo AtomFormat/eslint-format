@@ -59,9 +59,7 @@ including the [list of rules](http://eslint.org/docs/rules/).
 
 ## A Note About Settings
 
-If Use Global is on, Atom will use the global ESLint. The path to it is figured out by running `npm get prefix`. If this fails for any reason, you can set the global path manually in Global Node Installation Path.
-
-If Use Global is off, Atom will try to find a local installation in the project folder, look if there's ESLint in `${PROJECT_ROOT}/node_modules` and use it if found.
+Atom will try to find a local installation in the project folder, look if there's ESLint in `${PROJECT_ROOT}/node_modules` and use it if found.
 
 The path to the local node_modules folder can be a path relative to the project or an absolute path and should end in /node_modules/. This path is used if the other methods of discovery have failed.
 
