@@ -12,8 +12,10 @@
   "engines": {
     "atom": ">=1.24.0 <2.0.0"
   },
-  "dependencies": {
-    "eslint": "^5.6.0"
+  "scripts": {
+    "test": "atom --test spec",
+    "lint": "eslint .",
+    "semantic-release": "semantic-release"
   },
   "atomTestRunner": "atom-jasmine3-test-runner",
   "providedServices": {
@@ -28,7 +30,27 @@
       }
     }
   },
+  "dependencies": {
+    "eslint": "^5.16.0"
+  },
   "devDependencies": {
-    "atom-jasmine3-test-runner": "^4.1.2"
+    "@semantic-release/apm": "^1.0.2",
+    "@semantic-release/changelog": "^3.0.2",
+    "@semantic-release/commit-analyzer": "^6.1.0",
+    "@semantic-release/git": "^7.0.9",
+    "@semantic-release/github": "^5.3.0",
+    "@semantic-release/release-notes-generator": "^7.1.6",
+    "atom-jasmine3-test-runner": "^4.1.2",
+    "semantic-release": "15.13.8"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/github",
+      "@semantic-release/apm",
+      "@semantic-release/git"
+    ]
   }
 }
