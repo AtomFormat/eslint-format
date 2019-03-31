@@ -3,25 +3,29 @@ language: generic
 
 env:
   global:
-    - APM_TEST_PACKAGES=""
-    - ATOM_LINT_WITH_BUNDLED_NODE="true"
     - CI="true"
 
-  matrix:
-    - ATOM_CHANNEL=stable
-    - ATOM_CHANNEL=beta
+jobs:
+  include:
+    - stage: test 👩🏽‍💻
+    - script:
+      - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
+      - chmod u+x build-package.sh
+      - ./build-package.sh
+    - matrix:
+      - ATOM_CHANNEL=stable
+      - ATOM_CHANNEL=beta
+    - os:
+      - linux
+      - osx
 
-os:
-  - linux
-  - osx
+    - stage: lint ✨
+      script: npm run lint
+      node_js: lts/*
 
-dist: trusty
-
-### Generic setup follows ###
-script:
-  - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
-  - chmod u+x build-package.sh
-  - ./build-package.sh
+    - stage: release 🎉
+      script: npm run semantic-release
+      node_js: lts/*
 
 notifications:
   email:
@@ -31,19 +35,18 @@ notifications:
 branches:
   only:
     - master
-    - /^greenkeeper/.*$/
 
 git:
   depth: 10
 
 sudo: false
 
+dist: trusty
+
 addons:
   apt:
-    sources:
-    - ubuntu-toolchain-r-test
     packages:
-    - g++-6
+    - build-essential
     - fakeroot
     - git
     - libsecret-1-dev
