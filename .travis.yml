@@ -20,10 +20,10 @@ script:
 jobs:
   include:
     - stage: lint ✨
-      script: npm run lint
+      script: npm i && npm run lint
 
     - stage: release 🎉
-      script: npm run semantic-release
+      script: npm i && npm run semantic-release
 
 notifications:
   email:
