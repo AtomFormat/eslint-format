@@ -29,6 +29,6 @@
     }
   },
   "devDependencies": {
-    "atom-jasmine3-test-runner": "^4.0.0"
+    "atom-jasmine3-test-runner": "^4.1.2"
   }
 }
