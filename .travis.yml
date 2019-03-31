@@ -21,11 +21,9 @@ jobs:
   include:
     - stage: lint ✨
       script: npm i && npm run lint
-      node_js: lts/*
 
     - stage: release 🎉
       script: npm i && npm run semantic-release
-      node_js: lts/*
 
 notifications:
   email:
