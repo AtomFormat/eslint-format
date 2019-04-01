@@ -9,14 +9,13 @@ export APM_SCRIPT_PATH="${HOME}/atom/usr/bin"
 export PATH="${APM_SCRIPT_PATH}:${PATH}"
 
 echo "Using APM version:"
-apm -v
-
-# Use the system NPM to install the devDependencies
+apm --version
 echo "Using Node version:"
 node --version
 echo "Using NPM version:"
 npm --version
-echo "Installing remaining dependencies..."
+
+echo "Installing dependencies..."
 npm install
 
 echo "Running semantic-release..."

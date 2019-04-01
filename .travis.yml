@@ -23,14 +23,12 @@ jobs:
       script:
         - npm install
         - npm run lint
-      node_js: lts/*
 
     - stage: release 🎉
       if: branch = master
       script:
         - chmod u+x ./semantic-release.sh
         - ./semantic-release.sh
-      node_js: lts/*
 
 notifications:
   email:
