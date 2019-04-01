@@ -4,15 +4,16 @@ env:
   global:
     - CI="true"
 
+script:
+  - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
+  - chmod u+x ./build-package.sh
+  - ./build-package.sh
+
 jobs:
   include:
     - stage: test 👩🏾‍💻
       env: ATOM_CHANNEL=stable
       os: linux
-      script:
-        - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
-        - chmod u+x ./build-package.sh
-        - ./build-package.sh
     - stage: test 👩🏾‍💻
       env: ATOM_CHANNEL=beta
       os: linux
