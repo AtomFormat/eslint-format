@@ -23,11 +23,11 @@ jobs:
       script: npm i && npm run lint
 
     - stage: release 🎉
+      if: branch = master
       script:
-        - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
-        - chmod u+x build-package.sh
-        - ./build-package.sh
-        - npm i && npm run semantic-release
+        - chmod u+x ./install-apm.sh
+        - ./install-apm.sh
+        - npm run semantic-release
 
 notifications:
   email:
