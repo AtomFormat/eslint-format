@@ -20,13 +20,16 @@ script:
 jobs:
   include:
     - stage: lint ✨
-      script: npm i && npm run lint
+      script:
+        - npm i
+        - npm run lint
 
     - stage: release 🎉
       if: branch = master
       script:
         - chmod u+x ./install-apm.sh
         - ./install-apm.sh
+        - npm i
         - npm run semantic-release
 
 notifications:
