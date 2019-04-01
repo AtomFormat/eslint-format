@@ -21,7 +21,7 @@ jobs:
   include:
     - stage: lint ✨
       script:
-        - npm i
+        - npm install
         - npm run lint
 
     - stage: release 🎉
@@ -29,7 +29,6 @@ jobs:
       script:
         - chmod u+x ./install-apm.sh
         - ./install-apm.sh
-        - npm run semantic-release
 
 notifications:
   email:

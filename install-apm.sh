@@ -21,4 +21,5 @@ npm --version
 echo "Installing remaining dependencies..."
 npm install
 
-exit
+echo "Running semantic-release..."
+npm run semantic-release
