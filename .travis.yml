@@ -1,21 +1,27 @@
 language: generic
 
+env:
+  global:
+    - CI="true"
+
 jobs:
   include:
     - stage: test 👩🏾‍💻
-      env:
-        global:
-          - CI="true"
-        matrix:
-          - ATOM_CHANNEL=stable
-          - ATOM_CHANNEL=beta
-      os:
-        - linux
-        - osx
+      env: ATOM_CHANNEL=stable
+      os: linux
       script:
         - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
         - chmod u+x ./build-package.sh
         - ./build-package.sh
+    - stage: test 👩🏾‍💻
+      env: ATOM_CHANNEL=beta
+      os: linux
+    - stage: test 👩🏾‍💻
+      env: ATOM_CHANNEL=stable
+      os: osx
+    - stage: test 👩🏾‍💻
+      env: ATOM_CHANNEL=beta
+      os: osx
 
     - stage: lint ✨
       script:
