@@ -1,4 +1,6 @@
-language: generic
+language: node
+
+node_js: lts/*
 
 env:
   global:
