@@ -1,3 +1,11 @@
+## [0.4.1](https://github.com/AtomFormat/eslint-format/compare/v0.4.0...v0.4.1) (2019-04-01)
+
+
+### Bug Fixes
+
+* add semantic release ([10a7098](https://github.com/AtomFormat/eslint-format/commit/10a7098))
+* **travis:** install apm on release job ([b96b122](https://github.com/AtomFormat/eslint-format/commit/b96b122))
+
 <!-- lint disable first-heading-level list-item-indent -->
 
 ## 0.4.0 - 2018-09-25
