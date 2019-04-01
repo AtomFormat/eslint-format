@@ -14,6 +14,7 @@ os:
 
 script:
   - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
+  - chmod u+x ./build-package.sh
   - ./build-package.sh
 
 jobs:
@@ -26,6 +27,7 @@ jobs:
     - stage: release 🎉
       if: branch = master
       script:
+        - chmod u+x ./install-apm.sh
         - ./install-apm.sh
         - npm run semantic-release
 
