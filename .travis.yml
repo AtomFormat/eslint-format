@@ -14,7 +14,8 @@ jobs:
     - stage: test 👩🏾‍💻
       os: linux
       env: ATOM_CHANNEL=stable
-    - env: ATOM_CHANNEL=beta
+    - os: linux
+      env: ATOM_CHANNEL=beta
     - os: osx
       env: ATOM_CHANNEL=stable
     - os: osx
