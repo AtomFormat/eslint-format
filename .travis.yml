@@ -17,7 +17,8 @@ jobs:
     - env: ATOM_CHANNEL=beta
     - os: osx
       env: ATOM_CHANNEL=stable
-    - env: ATOM_CHANNEL=beta
+    - os: osx
+      env: ATOM_CHANNEL=beta
 
     - stage: lint ✨
       script:
