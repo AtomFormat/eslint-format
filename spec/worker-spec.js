@@ -85,7 +85,7 @@ describe("worker", function () {
 			};
 			expect(function () {
 				worker.execute(eslint, text, config);
-			}).toThrowError("No ESLint configuration found.");
+			}).toThrowError(/^No ESLint configuration found/);
 		});
 	});
 
