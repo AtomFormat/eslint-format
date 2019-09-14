@@ -1,7 +1,7 @@
 {
   "name": "eslint-format",
   "main": "./lib/eslint-format",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Format code with Atom IDE and ESLint",
   "keywords": [
     "format",
