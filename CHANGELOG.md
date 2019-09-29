@@ -1,3 +1,10 @@
+## [0.4.8](https://github.com/AtomFormat/eslint-format/compare/v0.4.7...v0.4.8) (2019-09-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint to ^6.5.0 ([567a112](https://github.com/AtomFormat/eslint-format/commit/567a112))
+
 ## [0.4.7](https://github.com/AtomFormat/eslint-format/compare/v0.4.6...v0.4.7) (2019-09-14)
 
 
