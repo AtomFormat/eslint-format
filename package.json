@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@semantic-release/apm-config": "^8.0.0",
-    "atom-jasmine3-test-runner": "^4.4.5",
+    "atom-jasmine3-test-runner": "^4.4.6",
     "semantic-release": "^17.0.4"
   },
   "release": {
