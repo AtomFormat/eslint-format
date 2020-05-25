@@ -1,7 +1,6 @@
 # eslint-format
 
-[![Build Status](https://travis-ci.org/AtomFormat/eslint-format.svg?branch=master)](https://travis-ci.org/AtomFormat/eslint-format)
-[![Build status](https://ci.appveyor.com/api/projects/status/eyr68a1cn96e37ra?svg=true)](https://ci.appveyor.com/project/UziTech/eslint-format)
+[![Actions Status](https://github.com/AtomFormat/eslint-format/workflows/CI/badge.svg)](https://github.com/AtomFormat/eslint-format/actions)
 [![Dependency Status](https://david-dm.org/AtomFormat/eslint-format.svg)](https://david-dm.org/AtomFormat/eslint-format)
 
 This format plugin for [Atom IDE](https://ide.atom.io/) provides
