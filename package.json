@@ -30,7 +30,7 @@
     }
   },
   "dependencies": {
-    "eslint": "^7.2.0"
+    "eslint": "^7.3.1"
   },
   "devDependencies": {
     "@semantic-release/apm-config": "^8.0.0",
