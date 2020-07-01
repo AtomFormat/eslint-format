@@ -4,37 +4,37 @@ import worker from "../lib/worker";
 import {fixturesPath, projectPath} from "./helper";
 import eslint from "eslint";
 
-describe("worker", function () {
-	describe("worker", function () {
-		beforeEach(function () {
+describe("worker", () => {
+	describe("worker", () => {
+		beforeEach(() => {
 			spyOn(worker, "execute").and.callThrough();
 		});
 
-		it("should run once if config is found", function () {
+		it("should run once if config is found", async () => {
 			const fileDir = fixturesPath();
 			const text = "\"test\";";
 			const config = {
 				defaultConfig: "/test/",
 				errorsOnly: false,
 			};
-			worker(fileDir, projectPath(fileDir), text, config);
+			await worker(fileDir, projectPath(fileDir), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).not.toBe(config.defaultConfig);
 		});
 
-		it("should run with default config if no config is found", function () {
+		it("should run with default config if no config is found", async () => {
 			const file = "/";
 			const text = "\"test\";";
 			const config = {
 				defaultConfig: fixturesPath(),
 				errorsOnly: false,
 			};
-			worker(null, projectPath(file), text, config);
+			await worker(null, projectPath(file), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).toBe(config.defaultConfig);
 		});
 
-		it("should run default config if no editor path and no project path", function () {
+		it("should run default config if no editor path and no project path", async () => {
 			atom.project.setPaths([]);
 			const fileDir = null;
 			const text = "\"test\";";
@@ -42,30 +42,30 @@ describe("worker", function () {
 				defaultConfig: fixturesPath(),
 				errorsOnly: false,
 			};
-			worker(fileDir, projectPath(fileDir), text, config);
+			await worker(fileDir, projectPath(fileDir), text, config);
 
 			expect(worker.execute.calls.mostRecent().args[2].cwd).toBe(config.defaultConfig);
 		});
 	});
-	describe("getDefaultConfig", function () {
-		it("should return the default config when given a folder", function () {
+	describe("getDefaultConfig", () => {
+		it("should return the default config when given a folder", async () => {
 			const config = fixturesPath();
-			const defaultConfig = worker.getDefaultConfig(config);
+			const defaultConfig = await worker.getDefaultConfig(config);
 
 			expect(defaultConfig).toEqual(config);
 		});
 
-		it("should return the default config folder when given a json file", function () {
+		it("should return the default config folder when given a json file", async () => {
 			const config = fixturesPath(".eslintrc.json");
 			const dirname = fixturesPath();
-			const defaultConfig = worker.getDefaultConfig(config);
+			const defaultConfig = await worker.getDefaultConfig(config);
 
 			expect(defaultConfig).toEqual(dirname);
 		});
 	});
 
-	describe("execute", function () {
-		it("should send fixes", function () {
+	describe("execute", () => {
+		it("should send fixes", async () => {
 			const text = "\"test\"";
 			const config = {
 				useEslintrc: false,
@@ -73,33 +73,38 @@ describe("worker", function () {
 					semi: 1,
 				},
 			};
-			const result = worker.execute(eslint, text, config);
+			const result = await worker.execute(eslint, text, config);
 
-			expect(result.results[0].messages[0].fix.text).toBe(";");
+			expect(result[0].messages[0].fix.text).toBe(";");
 		});
 
-		it("should throw error if no config", function () {
+		it("should throw error if no config", async () => {
 			const text = "test";
 			const config = {
 				cwd: "/"
 			};
-			expect(function () {
-				worker.execute(eslint, text, config);
-			}).toThrowError(/^No ESLint configuration found/);
+			let error;
+			try {
+				await worker.execute(eslint, text, config);
+			} catch (e) {
+				error = e;
+			}
+			expect(error).toEqual(jasmine.any(Error));
+			expect(error.message).toEqual(jasmine.stringMatching(/^No ESLint configuration found/));
 		});
 	});
 
-	describe("getEslint", function () {
+	describe("getEslint", () => {
 
-		it("should use local eslint if found", function () {
+		it("should use local eslint if found", async () => {
 			const dir = fixturesPath("eslint");
-			const workerEslint = worker.getEslint(dir);
+			const workerEslint = await worker.getEslint(dir);
 			expect(workerEslint.CLIEngine.version).not.toBe(eslint.CLIEngine.version);
 		});
 
-		it("should use global eslint if not found", function () {
+		it("should use global eslint if not found", async () => {
 			const dir = fixturesPath();
-			const workerEslint = worker.getEslint(dir);
+			const workerEslint = await worker.getEslint(dir);
 			expect(workerEslint.CLIEngine.version).toBe(eslint.CLIEngine.version);
 		});
 	});
