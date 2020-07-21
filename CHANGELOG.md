@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/AtomFormat/eslint-format/compare/v1.0.4...v1.0.5) (2020-07-21)
+
+
+### Bug Fixes
+
+* use ESLint class ([6dd4fe0](https://github.com/AtomFormat/eslint-format/commit/6dd4fe0dd02fd8ab91e347199a21ff8afd4a223c))
+
 ## [1.0.4](https://github.com/AtomFormat/eslint-format/compare/v1.0.3...v1.0.4) (2020-07-18)
 
 
